@@ -1,0 +1,10 @@
+{
+    "modId": "aquacommands",
+    "name": "AquaCommands",
+    "version": "1.0.0",
+    "authors": [
+        "jume",
+        "Antigravity"
+    ],
+    "description": "Create and manage custom chat commands with UI"
+}
