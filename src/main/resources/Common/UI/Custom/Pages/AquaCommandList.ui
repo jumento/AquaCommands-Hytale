@@ -1,0 +1,70 @@
+Group {
+  Anchor: (Width: 550, Height: 500);
+  Background: #0D1B2A(0.98);
+  LayoutMode: Top;
+  Padding: (Full: 20);
+
+  Label {
+    Text: "AquaCommands - Command List";
+    Anchor: (Height: 40);
+    Style: (
+      FontSize: 22,
+      TextColor: #00BCD4,
+      HorizontalAlignment: Center,
+      RenderBold: true
+    );
+  }
+
+  Group {
+    Anchor: (Height: 1);
+    Background: #1B263B;
+  }
+
+  Group { Anchor: (Height: 16); }
+
+  Label {
+    Text: "Custom Commands:";
+    Anchor: (Height: 25);
+    Style: (FontSize: 14, TextColor: #E0E1DD);
+  }
+
+  Group { Anchor: (Height: 12); }
+
+  // Command list area
+  Group #ContentArea {
+    FlexWeight: 1;
+    LayoutMode: Top;
+    Padding: (Full: 10);
+
+    Label #CommandListText {
+      Text: "Loading...";
+      Anchor: (Height: 350);
+      Style: (FontSize: 12, TextColor: #E0E1DD);
+    }
+  }
+
+  Group { Anchor: (Height: 16); }
+
+  Group {
+    Anchor: (Height: 1);
+    Background: #1B263B(0.5);
+  }
+
+  Group { Anchor: (Height: 16); }
+
+  // Close button
+  Group {
+    LayoutMode: Center;
+    Anchor: (Height: 44);
+
+    TextButton #CloseButton {
+      Text: "CLOSE";
+      Anchor: (Width: 150, Height: 40);
+      Style: TextButtonStyle(
+        Default: (Background: #1B263B, LabelStyle: (FontSize: 14, TextColor: #778DA9, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+        Hovered: (Background: #415A77, LabelStyle: (FontSize: 14, TextColor: #E0E1DD, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+        Pressed: (Background: #0D1B2A, LabelStyle: (FontSize: 14, TextColor: #778DA9, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center))
+      );
+    }
+  }
+}

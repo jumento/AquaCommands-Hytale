@@ -1,0 +1,21 @@
+# Kits Configuration
+# Create kits using /kit create <name>
+#
+# Each kit requires permission: essentials.kit.<kitname>
+# Cooldown bypass permission: essentials.kit.cooldown.bypass
+#
+# Kit options:
+#   display-name = "Kit Name"           # Name shown in UI
+#   cooldown = 3600                     # Cooldown in seconds (0 = no cooldown)
+#   type = "add"                        # "add" = add to inventory, "replace" = clear then add
+#
+# Items format:
+#   [[kits.kitname.items]]
+#   item-id = "Item_Id"                 # The item ID
+#   quantity = 1                        # Number of items
+#   section = "hotbar"                  # hotbar, storage, armor, utility, tools
+#   slot = 0                            # Slot index in that section
+#
+# We recommend creating kits in-game, but you can find item IDs: https://pastebin.com/raw/WeyffxER
+
+[kits]

@@ -1,0 +1,48 @@
+package com.jume.aquacommands.commands;
+
+import com.jume.aquacommands.permissions.PermissionManager;
+import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.universe.world.World;
+import javax.annotation.Nonnull;
+
+/**
+ * A command that is dynamically created by the user
+ * 
+ * @author jume, Antigravity
+ */
+public class DynamicCommand extends AbstractPlayerCommand {
+    private final String response;
+    private final String commandName;
+
+    public DynamicCommand(String name, String response) {
+        super(name, "Custom command: /" + name);
+        this.commandName = name;
+        this.response = response;
+    }
+
+    @Override
+    protected void execute(
+            @Nonnull CommandContext context,
+            @Nonnull Store<EntityStore> store,
+            @Nonnull Ref<EntityStore> ref,
+            @Nonnull PlayerRef playerRef,
+            @Nonnull World world) {
+
+        // Check permission
+        if (!PermissionManager.getInstance().hasCommandPermission(playerRef, commandName)) {
+            playerRef.sendMessage(Message.raw("You don't have permission to use this command!"));
+            return;
+        }
+
+        // Send the pre-configured response to the player
+        // Hytale client auto-detects URLs and makes them clickeable
+        playerRef.sendMessage(Message.raw(response));
+    }
+}

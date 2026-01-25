@@ -35,19 +35,20 @@ public class CommandManager {
     public void loadCommands() {
         if (!configFile.exists()) {
             LOGGER.info("Config file not found, creating new one");
-            save Commands();
+            saveCommands();
             return;
         }
 
         try (FileReader reader = new FileReader(configFile)) {
-            Type type = new TypeToken<Map<String, String>>(){}.getType();
+            Type type = new TypeToken<Map<String, String>>() {
+            }.getType();
             Map<String, String> loaded = GSON.fromJson(reader, type);
             if (loaded != null) {
                 commands = loaded;
                 LOGGER.info("Loaded {} custom commands", commands.size());
             }
         } catch (Exception e) {
-            LOGGER.error(" to load commands", e);
+            LOGGER.error("Failed to load commands", e);
         }
     }
 
