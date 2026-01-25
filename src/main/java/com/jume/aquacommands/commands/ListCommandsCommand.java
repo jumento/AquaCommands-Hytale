@@ -51,11 +51,10 @@ public class ListCommandsCommand extends AbstractPlayerCommand {
 
                 // Check if response contains a URL and make it clickeable
                 if (isURL(response)) {
-                    // Make the whole line clickable and styled
-                    String styledText = "/" + entry.getKey() + " -> "
-                            + com.jume.aquacommands.utils.ColorUtil.styleUrl(response);
+                    // Make the whole line clickable if it contains a URL
                     playerRef.sendMessage(
-                            Message.raw(styledText).link(response));
+                            Message.raw("/" + entry.getKey() + " -> ")
+                                    .insert(com.jume.aquacommands.utils.AquaColors.url(response)));
                 } else {
                     playerRef.sendMessage(Message.raw("/" + entry.getKey() + " -> " + response));
                 }

@@ -43,8 +43,7 @@ public class DynamicCommand extends AbstractPlayerCommand {
 
         // Send the pre-configured response to the player
         if (isURL(response)) {
-            String styled = com.jume.aquacommands.utils.ColorUtil.styleUrl(response);
-            playerRef.sendMessage(Message.raw(styled).link(response));
+            playerRef.sendMessage(com.jume.aquacommands.utils.AquaColors.url(response));
         } else {
             playerRef.sendMessage(Message.raw(response));
         }
