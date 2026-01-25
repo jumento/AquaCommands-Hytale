@@ -30,7 +30,7 @@ public class CommandManager {
     }
 
     /**
-     * Load commands from config file
+     * Load commands with smart migration support
      */
     public void loadCommands() {
         if (!configFile.exists()) {
@@ -40,27 +40,44 @@ public class CommandManager {
         }
 
         try (FileReader reader = new FileReader(configFile)) {
-            Type type = new TypeToken<Map<String, String>>() {
-            }.getType();
-            Map<String, String> loaded = GSON.fromJson(reader, type);
-            if (loaded != null) {
-                commands = loaded;
-                LOGGER.info("Loaded {} custom commands", commands.size());
+            com.google.gson.JsonElement root = com.google.gson.JsonParser.parseReader(reader);
+
+            if (root.isJsonObject()) {
+                com.google.gson.JsonObject obj = root.getAsJsonObject();
+                if (obj.has("version") && obj.has("commands")) {
+                    // New format: Load as AquaConfig
+                    AquaConfig config = GSON.fromJson(root, AquaConfig.class);
+                    this.commands = config.commands;
+                    LOGGER.info("Loaded config v{} with {} custom commands", config.version, commands.size());
+                } else {
+                    // Legacy format: Root is the map itself
+                    Type type = new TypeToken<Map<String, String>>() {
+                    }.getType();
+                    Map<String, String> legacy = GSON.fromJson(root, type);
+                    this.commands = legacy != null ? legacy : new HashMap<>();
+                    LOGGER.info("Legacy config detected. Migrating {} commands to v{}",
+                            commands.size(), AquaConfig.CURRENT_VERSION);
+                    saveCommands(); // Automatically migrate to new format
+                }
             }
         } catch (Exception e) {
             LOGGER.error("Failed to load commands", e);
+            this.commands = new HashMap<>(); // Fail safe to avoid nulls
         }
     }
 
     /**
-     * Save commands to config file
+     * Save commands in the new AquaConfig format
      */
     public void saveCommands() {
         try {
             configFile.getParentFile().mkdirs();
             try (FileWriter writer = new FileWriter(configFile)) {
-                GSON.toJson(commands, writer);
-                LOGGER.info("Saved {} custom commands", commands.size());
+                AquaConfig config = new AquaConfig();
+                config.commands = this.commands;
+                // config.version is automatically set to CURRENT_VERSION
+                GSON.toJson(config, writer);
+                LOGGER.info("Saved {} custom commands (v{})", commands.size(), config.version);
             }
         } catch (Exception e) {
             LOGGER.error("Failed to save commands", e);

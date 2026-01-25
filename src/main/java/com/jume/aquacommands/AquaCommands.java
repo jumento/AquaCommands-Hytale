@@ -33,12 +33,11 @@ public class AquaCommands extends JavaPlugin {
     @Override
     public void setup() {
         instance = this;
-        LOGGER.info("=== AquaCommands v1.0.0 Starting ===");
+        LOGGER.info("=== AquaCommands v1.3.0-STABLE Starting ===");
 
         // 1. Initialize Permission Manager
         permissionManager = PermissionManager.getInstance();
-        LOGGER.info("Permission system initialized (LuckPerms: {})",
-                permissionManager.isLuckPermsAvailable() ? "enabled" : "disabled");
+        LOGGER.info("Permission system initialized (Simplified Mode)");
 
         // 2. Initialize CommandManager
         File configDir = new File("mods/AquaCommands");
@@ -58,7 +57,6 @@ public class AquaCommands extends JavaPlugin {
 
         // 5. Register list command
         this.getCommandRegistry().registerCommand(new ListCommandsCommand());
-        this.getCommandRegistry().registerCommand(new ListCommandsCommand());
         LOGGER.info("Registered command: /aqualist");
 
         // 6. Register remove command
@@ -68,7 +66,7 @@ public class AquaCommands extends JavaPlugin {
         // 7. Register all custom commands
         registerCustomCommands();
 
-        LOGGER.info("=== AquaCommands v1.0.0 Enabled ===");
+        LOGGER.info("=== AquaCommands v1.0.0 Setup Complete ===");
     }
 
     public void teardown() {

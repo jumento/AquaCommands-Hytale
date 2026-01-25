@@ -9,7 +9,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.Message;
-import com.jume.aquacommands.AquaCommands;
 import com.jume.aquacommands.config.CommandManager;
 import com.jume.aquacommands.permissions.PermissionManager;
 import com.jume.aquacommands.ui.CommandRemovePage;
@@ -33,12 +32,18 @@ public class RemoveCommandCommand extends AbstractPlayerCommand {
             @Nonnull PlayerRef playerRef,
             @Nonnull World world) {
 
-        // Permission check using PlayerRef correctly
-        if (!PermissionManager.getInstance().hasPermission(playerRef, "aquacommands.admin")) {
-            return; // PermissionManager usually sends failure message, or we can send one if needed
-        }
-
         Player player = store.getComponent(ref, Player.getComponentType());
+
+        // Permission check using native Player entity
+        if (!PermissionManager.getInstance().hasCommandPermission(player, "admin")) {
+            // Check for 'aquacommands.command.admin' or just reuse a permission
+            // Wait, previous code used "aquacommands.admin".
+            // Let's use hasManagePermission to be consistent with other admin commands.
+            if (!PermissionManager.getInstance().hasManagePermission(player)) {
+                playerRef.sendMessage(Message.raw("You don't have permission to remove commands!"));
+                return;
+            }
+        }
 
         // Open remove UI
         CommandRemovePage page = new CommandRemovePage(playerRef, commandManager);

@@ -8,6 +8,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -33,8 +34,10 @@ public class ListCommandsCommand extends AbstractPlayerCommand {
             @Nonnull PlayerRef playerRef,
             @Nonnull World world) {
 
-        // Check permission
-        if (!PermissionManager.getInstance().hasManagePermission(playerRef)) {
+        Player player = store.getComponent(ref, Player.getComponentType());
+
+        // Check permission using native Player entity
+        if (!PermissionManager.getInstance().hasManagePermission(player)) {
             playerRef.sendMessage(Message.raw("You don't have permission to list commands!"));
             return;
         }

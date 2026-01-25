@@ -4,23 +4,22 @@ import com.jume.aquacommands.AquaCommands;
 import com.jume.aquacommands.permissions.PermissionManager;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.core.Message;
 import javax.annotation.Nonnull;
 
 /**
- * Reload command - reloads all custom commands from config
- * Usage: /aquareload
- * Permission: aquacommands.reload
+ * Command to reload custom commands from config
  */
 public class ReloadCommandsCommand extends AbstractPlayerCommand {
 
     public ReloadCommandsCommand() {
-        super("aquareload", "Reload all custom commands from configuration");
+        super("aquareload", "Reload custom commands configuration");
     }
 
     @Override
@@ -31,21 +30,14 @@ public class ReloadCommandsCommand extends AbstractPlayerCommand {
             @Nonnull PlayerRef playerRef,
             @Nonnull World world) {
 
-        // Check permission
-        if (!PermissionManager.getInstance().hasReloadPermission(playerRef)) {
+        Player player = store.getComponent(ref, Player.getComponentType());
+
+        if (!PermissionManager.getInstance().hasReloadPermission(player)) {
             playerRef.sendMessage(Message.raw("You don't have permission to reload commands!"));
             return;
         }
 
-        try {
-            // Reload commands
-            AquaCommands.getInstance().reloadCommands();
-
-            int commandCount = AquaCommands.getInstance().getCommandManager().getAllCommands().size();
-            playerRef.sendMessage(Message.raw("Successfully reloaded " + commandCount + " custom command(s)!"));
-
-        } catch (Exception e) {
-            playerRef.sendMessage(Message.raw("Error reloading commands: " + e.getMessage()));
-        }
+        AquaCommands.getInstance().reloadCommands();
+        playerRef.sendMessage(Message.raw("Commands reloaded successfully!"));
     }
 }

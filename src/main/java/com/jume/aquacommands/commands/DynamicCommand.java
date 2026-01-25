@@ -3,13 +3,15 @@ package com.jume.aquacommands.commands;
 import com.jume.aquacommands.permissions.PermissionManager;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
-import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 
 /**
@@ -18,6 +20,7 @@ import javax.annotation.Nonnull;
  * @author jume, Antigravity
  */
 public class DynamicCommand extends AbstractPlayerCommand {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DynamicCommand.class);
     private final String response;
     private final String commandName;
 
@@ -25,6 +28,15 @@ public class DynamicCommand extends AbstractPlayerCommand {
         super(name, "Custom command: /" + name);
         this.commandName = name;
         this.response = response;
+    }
+
+    // Try to disable built-in permission checks
+    public boolean requiresPermission() {
+        return false;
+    }
+
+    public String getPermission() {
+        return null;
     }
 
     @Override
@@ -35,11 +47,21 @@ public class DynamicCommand extends AbstractPlayerCommand {
             @Nonnull PlayerRef playerRef,
             @Nonnull World world) {
 
-        // Check permission
-        if (!PermissionManager.getInstance().hasCommandPermission(playerRef, commandName)) {
+        LOGGER.info("DEBUG: Executing custom command /{} for {}", commandName, playerRef.toString());
+
+        Player player = store.getComponent(ref, Player.getComponentType());
+
+        // Check permission using native Player entity
+        // Note: For customs, PermissionManager defaults to TRUE if unconfigured in
+        // Hytale,
+        // or uses LuckPerms logic if installed.
+        if (!PermissionManager.getInstance().hasCommandPermission(player, commandName)) {
+            LOGGER.warn("DEBUG: Permission denied internal check for /{}", commandName);
             playerRef.sendMessage(Message.raw("You don't have permission to use this command!"));
             return;
         }
+
+        LOGGER.info("DEBUG: Internal permission check passed for /{}", commandName);
 
         // Send the pre-configured response to the player
         if (isURL(response)) {
