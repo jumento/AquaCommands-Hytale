@@ -4,6 +4,7 @@ import com.jume.aquacommands.commands.AquaCmdCommand;
 import com.jume.aquacommands.commands.DynamicCommand;
 import com.jume.aquacommands.commands.ListCommandsCommand;
 import com.jume.aquacommands.commands.ReloadCommandsCommand;
+import com.jume.aquacommands.commands.RemoveCommandCommand;
 import com.jume.aquacommands.config.CommandManager;
 import com.jume.aquacommands.permissions.PermissionManager;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
@@ -57,9 +58,14 @@ public class AquaCommands extends JavaPlugin {
 
         // 5. Register list command
         this.getCommandRegistry().registerCommand(new ListCommandsCommand());
+        this.getCommandRegistry().registerCommand(new ListCommandsCommand());
         LOGGER.info("Registered command: /aqualist");
 
-        // 6. Register all custom commands
+        // 6. Register remove command
+        this.getCommandRegistry().registerCommand(new RemoveCommandCommand(commandManager));
+        LOGGER.info("Registered command: /aquacmdremove");
+
+        // 7. Register all custom commands
         registerCustomCommands();
 
         LOGGER.info("=== AquaCommands v1.0.0 Enabled ===");

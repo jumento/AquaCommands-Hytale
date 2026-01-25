@@ -18,6 +18,7 @@ Create and manage custom chat commands with an intuitive in-game UI. **Now with 
 |---------|-------------|------------|
 | `/aquacmd` | Opens the command creation/edit UI | `aquacommands.manage` |
 | `/aqualist` | Opens UI showing all custom commands | `aquacommands.manage` |
+| `/aquacmdremove` | Opens UI to delete a command | `aquacommands.admin` |
 | `/aquareload` | Reloads all commands from config | `aquacommands.reload` |
 | `/[custom]` | Execute a custom command | `aquacommands.command.[commandname]` |
 
@@ -196,6 +197,6 @@ For issues, check server logs or contact the development team.
 - ✨ Dynamic command registration
 - ✨ LuckPerms integration with automatic fallback
 - ✨ `/aquareload` command for hot-reloading
-- ✨ `/aqualist` command to view all commands
+- ✨ `/aqualist` and `/aquacmdremove` UI commands
 - ✨ Per-command permission system
-- ✨ Colored message support (§ formatting codes)
+- ✨ **Smart URL Styling**: URLs in messages are automatically clickable, blue, and underlined without needing special codes.
