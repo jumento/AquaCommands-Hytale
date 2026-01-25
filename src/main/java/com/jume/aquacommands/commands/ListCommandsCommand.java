@@ -52,6 +52,8 @@ public class ListCommandsCommand extends AbstractPlayerCommand {
                 // Check if response contains a URL and make it clickeable
                 if (isURL(response)) {
                     // Make the whole line clickable if it contains a URL
+                    // Use API method for color. Underline not supported directly by Message API
+                    // currently.
                     playerRef.sendMessage(
                             Message.raw("/" + entry.getKey() + " -> " + response)
                                     .link(response));
