@@ -42,7 +42,18 @@ public class DynamicCommand extends AbstractPlayerCommand {
         }
 
         // Send the pre-configured response to the player
-        // Hytale client auto-detects URLs and makes them clickeable
-        playerRef.sendMessage(Message.raw(response));
+        if (isURL(response)) {
+            playerRef.sendMessage(Message.raw(response).link(response));
+        } else {
+            playerRef.sendMessage(Message.raw(response));
+        }
+    }
+
+    private boolean isURL(String text) {
+        if (text == null)
+            return false;
+        String lower = text.toLowerCase().trim();
+        return lower.startsWith("http://") || lower.startsWith("https://") ||
+                lower.startsWith("www.") || lower.contains("://");
     }
 }
