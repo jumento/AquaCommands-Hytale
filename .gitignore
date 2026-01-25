@@ -8,7 +8,7 @@ build/
 !**/src/test/**/build/
 
 # ===========================
-# Java
+# Java & Class files
 # ===========================
 *.class
 *.jar
@@ -20,22 +20,15 @@ out/
 # ===========================
 # IDE
 # ===========================
-# IntelliJ IDEA
 .idea/
 *.iml
 *.iws
 *.ipr
-
-# VSCode
 .vscode/
 *.code-workspace
-
-# Eclipse
 .classpath
 .project
 .settings/
-
-# NetBeans
 nbproject/
 nbbuild/
 dist/
@@ -50,18 +43,32 @@ Thumbs.db
 desktop.ini
 
 # ===========================
-# Hytale Server
+# Hytale Server Runtime Garbage
 # ===========================
 run/
 server/
-mods/AquaCommands/commands.json
+mods/
 checkouts/
 temp_*/
+logs/
+
+# ===========================
+# Root Dump/Garbage Files
+# ===========================
+*_dump.txt
+*.toml
+config.json
+manifest.json
+META-INF/
+com/
+org/
+Common/
+2026-*-server.log
 
 # ===========================
 # Project Specific
 # ===========================
-# Temporary documentation
+# Documentation artifacts not for repo
 INSTALACION.md
 INSTRUCCIONES_CRITICAS.md
 UI_README.md
@@ -71,13 +78,7 @@ PERMISSIONS_DEV_GUIDE.md
 *-Deploy.zip
 deploy/
 
-# CustomCommands unpacked files (for reference)
+# External references
 CustomCommands/
-
-# Local testing
 test-server/
 local-config.json
-t e m p _ *
-
-# Debug dumps
-*_dump.txt
