@@ -51,12 +51,11 @@ public class ListCommandsCommand extends AbstractPlayerCommand {
 
                 // Check if response contains a URL and make it clickeable
                 if (isURL(response)) {
-                    // Make the whole line clickable if it contains a URL
-                    // Use API method for color. Underline not supported directly by Message API
-                    // currently.
+                    // Make the whole line clickable and styled
+                    String styledText = "/" + entry.getKey() + " -> "
+                            + com.jume.aquacommands.utils.ColorUtil.styleUrl(response);
                     playerRef.sendMessage(
-                            Message.raw("/" + entry.getKey() + " -> " + response)
-                                    .link(response));
+                            Message.raw(styledText).link(response));
                 } else {
                     playerRef.sendMessage(Message.raw("/" + entry.getKey() + " -> " + response));
                 }
