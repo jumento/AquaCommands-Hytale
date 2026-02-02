@@ -27,12 +27,12 @@ sourceSets {
 }
 
 dependencies {
-    compileOnly files('C:/Users/jume/.gemini/antigravity/scratch/ProtectionBlock-hytale-edition/libs/HytaleServer.jar')
+    compileOnly files('libs/HytaleServer.jar')
     compileOnly 'com.google.code.gson:gson:2.10.1'
     compileOnly 'org.slf4j:slf4j-api:2.0.9'
     
     // LuckPerms API for permission system (optional)
-    compileOnly files('C:/Users/jume/Downloads/hytale/LuckPerms-Hytale-5.5.25-beta11.jar')
+    compileOnly files('libs/LuckPerms.jar')
 }
 
 jar {

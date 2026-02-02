@@ -6,8 +6,5 @@
         "jume",
         "Antigravity"
     ],
-    "description": "Create and manage custom chat commands with UI",
-    "optionalDependencies": {
-        "luckperms": "*"
-    }
+    "description": "Create and manage custom chat commands with UI"
 }
