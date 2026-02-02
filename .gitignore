@@ -1,25 +1,16 @@
-# ===========================
 # Gradle
-# ===========================
 .gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-# ===========================
-# Java & Class files
-# ===========================
+# Java
 *.class
 *.jar
 !gradle-wrapper.jar
 bin/
 out/
-*.log
 
-# ===========================
-# IDE
-# ===========================
+# IDEs
 .idea/
 *.iml
 *.iws
@@ -29,56 +20,29 @@ out/
 .classpath
 .project
 .settings/
-nbproject/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
 
-# ===========================
-# OS Specific
-# ===========================
+# OS
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# ===========================
-# Hytale Server Runtime Garbage
-# ===========================
-run/
+# Hytale Runtime / Extra
 server/
+run/
 mods/
+logs/
 checkouts/
 temp_*/
-logs/
+*.log
+message_api.txt
+content.txt
 
-# ===========================
-# Root Dump/Garbage Files
-# ===========================
-*_dump.txt
-*.toml
-config.json
-manifest.json
-META-INF/
-com/
-org/
-Common/
-2026-*-server.log
+# Cognitive Orchestration (Local Only)
+BOT.md
+GUIA.md
+guiauis.md
 
-# ===========================
 # Project Specific
-# ===========================
-# Documentation artifacts not for repo
-INSTALACION.md
-INSTRUCCIONES_CRITICAS.md
-UI_README.md
-PERMISSIONS_DEV_GUIDE.md
-
-# Deployment files
-*-Deploy.zip
-deploy/
-
-# External references
-CustomCommands/
-test-server/
-local-config.json
+libs/
+!libs/.gitkeep
+src/main/resources/commands.json
