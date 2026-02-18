@@ -15,10 +15,18 @@ import javax.annotation.Nonnull;
 public class DynamicCommand extends AbstractPlayerCommand {
     private final String response;
 
-    public DynamicCommand(String name, String response) {
+    private final String color;
+
+    public DynamicCommand(String name, String response, String color) {
         super(name, "Custom command", false);
         this.response = response;
+        this.color = (color == null || color.isEmpty()) ? "#FFFFFF" : color;
         this.requirePermission("aquacommands." + name.toLowerCase());
+    }
+
+    // For legacy support or tests
+    public DynamicCommand(String name, String response) {
+        this(name, response, "#FFFFFF");
     }
 
     @Override
@@ -29,6 +37,6 @@ public class DynamicCommand extends AbstractPlayerCommand {
             @Nonnull PlayerRef playerRef,
             @Nonnull World world) {
 
-        playerRef.sendMessage(AquaColors.translate(response));
+        playerRef.sendMessage(AquaColors.translate(response, color));
     }
 }

@@ -13,90 +13,94 @@ $C = "../Common.ui";
 );
 
 Group {
-  Anchor: (Width: 500, Height: 420);
-  Background: #141c26(0.98);
   LayoutMode: Top;
-  Padding: (Full: 25);
-
+  Background: (Color: #141c26(0.98));
+  Anchor: (Width: 500, Height: 420);
   Label {
-    Text: "AquaCommands - Create Command";
     Anchor: (Height: 45);
-    Style: (
-      FontSize: 24,
+    Text: "AquaCommands - Create Command";
+    Style: (FontSize: 24,
       TextColor: #00BCD4,
       HorizontalAlignment: Center,
-      RenderBold: true
-    );
+      RenderBold: true);
   }
-
   Label {
-    Text: "Create custom chat commands easily";
     Anchor: (Height: 25);
-    Style: (
-      FontSize: 13,
+    Text: "Create custom chat commands easily";
+    Style: (FontSize: 13,
       TextColor: #96a9be,
-      HorizontalAlignment: Center
-    );
+      HorizontalAlignment: Center);
   }
-
   Group {
+    Background: (Color: #2b3542);
     Anchor: (Height: 1);
-    Background: #2b3542;
   }
-
-  Group { Anchor: (Height: 20); }
-
+  Group {
+    Anchor: (Height: 20);
+  }
   Group {
     LayoutMode: Left;
     Anchor: (Height: 44);
-
     Label {
-      Text: "Command Name";
       Anchor: (Width: 130);
+      Text: "Command Name";
       Style: (FontSize: 14, TextColor: #96a9be, VerticalAlignment: Center);
     }
-
     $C.@TextField #CommandNameInput {
       FlexWeight: 1;
       PlaceholderText: "e.g., yt, discord, rules";
     }
   }
-
-  Group { Anchor: (Height: 12); }
-
+  Group {
+    Anchor: (Height: 12);
+  }
   Group {
     LayoutMode: Left;
     Anchor: (Height: 44);
-
     Label {
-      Text: "Response Message";
       Anchor: (Width: 130);
+      Text: "Response Message";
       Style: (FontSize: 14, TextColor: #96a9be, VerticalAlignment: Center);
     }
-
     $C.@TextField #CommandResponseInput {
       FlexWeight: 1;
       PlaceholderText: "The message sent when command is used";
     }
   }
-
-  Group { FlexWeight: 1; }
-
+  Group {
+    Anchor: (Height: 12);
+  }
+  Group {
+    LayoutMode: Left;
+    Anchor: (Height: 44);
+    Label {
+      Anchor: (Width: 130);
+      Text: "Message Color (Hex)";
+      Style: (FontSize: 14, TextColor: #96a9be, VerticalAlignment: Center);
+    }
+    ColorPickerDropdownBox #ColorInput {
+      Anchor: (Width: 50, Height: 32);
+      Style: $C.@DefaultColorPickerDropdownBoxStyle;
+      Color: #FFFFFF;
+    }
+  }
+  Group {
+    FlexWeight: 1;
+  }
   Group {
     LayoutMode: Center;
     Anchor: (Height: 44);
-
     TextButton #CreateButton {
-      Text: "CREATE COMMAND";
       Anchor: (Width: 200, Height: 40);
+      Text: "CREATE COMMAND";
       Style: @PrimaryButtonStyle;
     }
-
-    Group { Anchor: (Width: 16); }
-
+    Group {
+      Anchor: (Width: 16);
+    }
     TextButton #CancelButton {
-      Text: "CANCEL";
       Anchor: (Width: 110, Height: 40);
+      Text: "CANCEL";
       Style: @CancelButtonStyle;
     }
   }

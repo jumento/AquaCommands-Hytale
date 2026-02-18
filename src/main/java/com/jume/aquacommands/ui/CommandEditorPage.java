@@ -29,6 +29,7 @@ public class CommandEditorPage extends InteractiveCustomUIPage<CommandEditorPage
         public String action;
         public String cmdName;
         public String cmdContent;
+        public String cmdColor;
 
         public static final BuilderCodec<CommandEventData> CODEC = BuilderCodec
                 .builder(CommandEventData.class, CommandEventData::new)
@@ -37,6 +38,8 @@ public class CommandEditorPage extends InteractiveCustomUIPage<CommandEditorPage
                 .append(new KeyedCodec<>("@CmdName", Codec.STRING), (o, v) -> o.cmdName = v, o -> o.cmdName)
                 .add()
                 .append(new KeyedCodec<>("@CmdContent", Codec.STRING), (o, v) -> o.cmdContent = v, o -> o.cmdContent)
+                .add()
+                .append(new KeyedCodec<>("@CmdColor", Codec.STRING), (o, v) -> o.cmdColor = v, o -> o.cmdColor)
                 .add()
                 .build();
     }
@@ -50,11 +53,13 @@ public class CommandEditorPage extends InteractiveCustomUIPage<CommandEditorPage
     public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder cmd, @Nonnull UIEventBuilder evt,
             @Nonnull Store<EntityStore> store) {
         cmd.append("Pages/AquaCommandEditor.ui");
+        cmd.set("#ColorInput.Color", "#FFFFFF");
 
         evt.addEventBinding(CustomUIEventBindingType.Activating, "#CreateButton",
                 new EventData().append("Action", "create")
                         .append("@CmdName", "#CommandNameInput.Value")
-                        .append("@CmdContent", "#CommandResponseInput.Value"));
+                        .append("@CmdContent", "#CommandResponseInput.Value")
+                        .append("@CmdColor", "#ColorInput.Color"));
 
         evt.addEventBinding(CustomUIEventBindingType.Activating, "#CancelButton",
                 new EventData().append("Action", "cancel"));
@@ -69,7 +74,9 @@ public class CommandEditorPage extends InteractiveCustomUIPage<CommandEditorPage
             if (data.cmdName != null && !data.cmdName.trim().isEmpty() && data.cmdContent != null
                     && !data.cmdContent.trim().isEmpty()) {
                 String name = data.cmdName.trim().replaceAll("\\s+", "");
-                commandManager.addCommand(name, data.cmdContent);
+                String color = (data.cmdColor != null && !data.cmdColor.isEmpty()) ? data.cmdColor : "#FFFFFF";
+
+                commandManager.addCommand(name, data.cmdContent, color);
                 commandManager.saveCommands(); // Usually auto-reload isn't instant but next restart or manual reload.
                 // We should auto-register? Dynamic registration at runtime might work.
 

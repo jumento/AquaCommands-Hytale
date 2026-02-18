@@ -35,13 +35,27 @@ public class AquaColors {
      * into a Hytale Message object with proper colors and clickable links.
      */
     public static Message translate(String text) {
+        return translate(text, null);
+    }
+
+    /**
+     * Translates a string with Minecraft-style color codes (&a, &b, etc.)
+     * into a Hytale Message object with proper colors and clickable links.
+     * 
+     * @param defaultColor The default hex color to use (e.g. "#FFFFFF"), or null.
+     */
+    public static Message translate(String text, String defaultColor) {
         Message message = Message.empty();
         if (text == null || text.isEmpty())
             return message;
 
         // Split by color code, keeping the code at the start of each part
         String[] parts = text.split("(?=&[0-9a-fA-F])");
-        String activeColor = null;
+        // Sanitize default color (strip alpha if present, e.g. #RRGGBBAA -> #RRGGBB)
+        if (defaultColor != null && defaultColor.length() == 9) {
+            defaultColor = defaultColor.substring(0, 7);
+        }
+        String activeColor = defaultColor;
 
         for (String part : parts) {
             String content = part;
@@ -78,7 +92,13 @@ public class AquaColors {
 
             // URL
             String url = matcher.group();
-            message.insert(url).link(url).color(VIOLET_HEX);
+            String linkColor = VIOLET_HEX;
+
+            if (activeColor != null && !activeColor.equalsIgnoreCase("#FFFFFF")) {
+                linkColor = activeColor;
+            }
+
+            message.insert(url).link(url).color(linkColor);
 
             lastEnd = matcher.end();
         }
