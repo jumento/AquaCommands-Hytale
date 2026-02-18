@@ -46,3 +46,4 @@ guiauis.md
 libs/
 !libs/.gitkeep
 src/main/resources/commands.json
+BOT.md
